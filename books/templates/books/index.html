@@ -1,9 +1,21 @@
-<html>
-    <head>
-        <title>Homepage</title>
-    </head>
-    <body>
-        <h1> this is homepage </h1>
-        <p> we are learning python here </p>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>First page</title>
+  </head>
+  <body>
+    <h1>this is homepage</h1>
+    <p>we are learning python here</p>
+    <h1>{{name}}</h1>
+    <h2>{{course}}</h2>
+
+    <p>printing list of data</p>
+    {% for i in data %}
+    <h1>{{i.name}}</h1>
+    <p>{{i.course}}</p>
+
+    {% endfor %}
+  </body>
 </html>

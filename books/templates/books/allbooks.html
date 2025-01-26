@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>books</title>
+</head>
+<body>
+    <h1>This is book page</h1>
+    <h2>List of books</h2>
+
+    {% for book in books %}
+        {% if book.inStock %}
+            <h1 style="background-color: green;">IN Stock</h1>
+            <h1>Name of book: {{book.name}}</h1>
+            <h3>Name of author: {{book.author}}</h3>
+            <!-- <h4>Price of book: Rs {{book.price}}</h4>
+            <h4>InStock: {% if book.inStock %} Yes {% else %} No {% endif %}</h4> -->
+            <a href="#">view details</a>
+        <!-- {% else %}
+                <h1 style="background-color: red;">Not IN Stock</h1>
+                <h1>Name of book: {{book.name}}</h1>
+                <h3>Name of author: {{book.author}}</h3>
+                <h4>Price of book: Rs {{book.price}}</h4> -->
+        {% endif %}
+    {% endfor %}
+</body>
+</html>

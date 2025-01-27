@@ -56,10 +56,15 @@ def get_all_books(request):
     })
 
 def get_book_by_id(request,book_id):
-    data = {}
+    data = {
+
+    }
     for book in list_of_books:
         if book["id"] == int(book_id):
-            data["name"] =  book["name"] 
+            data["id"] == book_id
+            data["name"] =  book["name"]
+
+    print(data)
             
     return render(request,"books/book-detail.html",{
        "book": data

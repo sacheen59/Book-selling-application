@@ -16,7 +16,7 @@
             <h3>Name of author: {{book.author}}</h3>
             <!-- <h4>Price of book: Rs {{book.price}}</h4>
             <h4>InStock: {% if book.inStock %} Yes {% else %} No {% endif %}</h4> -->
-            <a href="#">view details</a>
+            <a href="{% url 'book-detail' book.id %}">view details</a>
         <!-- {% else %}
                 <h1 style="background-color: red;">Not IN Stock</h1>
                 <h1>Name of book: {{book.name}}</h1>

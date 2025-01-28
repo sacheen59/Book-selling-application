@@ -1,28 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>books</title>
-</head>
-<body>
-    <h1>This is book page</h1>
-    <h2>List of books</h2>
+{% extends "base.html" %}
 
-    {% for book in books %}
-        {% if book.inStock %}
-            <h1 style="background-color: green;">IN Stock</h1>
-            <h1>Name of book: {{book.name}}</h1>
-            <h3>Name of author: {{book.author}}</h3>
-            <!-- <h4>Price of book: Rs {{book.price}}</h4>
-            <h4>InStock: {% if book.inStock %} Yes {% else %} No {% endif %}</h4> -->
-            <a href="{% url 'book-detail' book.id %}">view details</a>
-        <!-- {% else %}
-                <h1 style="background-color: red;">Not IN Stock</h1>
-                <h1>Name of book: {{book.name}}</h1>
-                <h3>Name of author: {{book.author}}</h3>
-                <h4>Price of book: Rs {{book.price}}</h4> -->
-        {% endif %}
-    {% endfor %}
-</body>
-</html>
+{% block title %}
+Bookstore || all-books
+{% endblock %}
+
+{% block main_content %}
+<div class="container-fluid">
+    <h1 class="my-4 text-muted text-center">All Books</h1>
+
+    <!-- table to show the content of book  -->
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Image Url</th>
+            <th scope="col">Description</th>
+            <th scope="col">Author</th>
+            <th scope="col">Price</th>
+            <th scope="col">Instock</th>
+            <th scope="col">Published date</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td >{{book.name}}</td>
+                <td >
+                    <img src="{{ book.imageUrl}}" alt="{{book.name}}" height="100px" width="100px">
+                </td>
+                <td >{{book.description}}</td>
+                <td >{{book.author}}</td>
+                <td >{{book.price}}</td>
+                <td >{% if book.instock %} In stock {% else %} Out of Stock {% endif %}</td>
+                <td >{{book.published_date}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    
+</div>
+{% endblock %}

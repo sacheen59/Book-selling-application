@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .data import list_of_books
+from . models import Book
+
+
+
 
 # Create your views here.
 # function based
@@ -50,9 +54,9 @@ def homepage(request):
 # ]
 
 def get_all_books(request):
-    
+    all_books = Book.objects.all()
     return render(request,"books/allbooks.html",{
-        'books': list_of_books
+        'books': all_books
     })
 
 def get_book_by_id(request,book_id):
@@ -61,7 +65,7 @@ def get_book_by_id(request,book_id):
     }
     for book in list_of_books:
         if book["id"] == int(book_id):
-            data["id"] == book_id
+            data["id"] = int(book_id)
             data["name"] =  book["name"]
 
     print(data)

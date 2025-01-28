@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail page</title>
-</head>
-<body>
-    <h1>Name of book: {{book.name}}</h1>
-    <a href="{% url 'get-all-books' %}">Go to list page</a>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block title %}
+Bookstore || book-detail
+{% endblock %}
+
+{% block main_content %}
+<h1>This is main content</h1>
+{% endblock%}

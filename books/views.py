@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .data import list_of_books
-from . models import Book
+from . models import Book,Category
 
 
 
@@ -58,6 +58,13 @@ def get_all_books(request):
     return render(request,"books/allbooks.html",{
         'books': all_books
     })
+
+def get_all_categories(request):
+    all_categories = Category.objects.all()
+    return render(request,"books/allcategories.html",{
+        'categories': all_categories
+    })
+
 
 def get_book_by_id(request,book_id):
     data = {

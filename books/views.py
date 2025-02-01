@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from django.contrib import messages
 from .data import list_of_books
 from . models import Book,Category
-
+from .forms import CategoryForm
 
 
 
@@ -65,6 +66,27 @@ def get_all_categories(request):
         'categories': all_categories
     })
 
+def post_category(request):
+    if request.method == "POST":
+        form = CategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request,messages.SUCCESS,"Category added successfully")
+            return redirect("/books/categories/")
+        else:
+            messages.add_message(request,messages.ERROR,"Failed to add category")
+            return render(request,"books/postcategory.html",{'form': form})
+    
+    return render(request,"books/postcategory.html",{
+        'form': CategoryForm
+    })
+
+def delete_category(request,category_id):
+    category = Category.objects.get(id=category_id)
+    category.delete()
+    messages.add_message(request,messages.SUCCESS,"Category deleted successfully")
+    return redirect("/books/categories/")
+
 
 def get_book_by_id(request,book_id):
     data = {
@@ -80,3 +102,9 @@ def get_book_by_id(request,book_id):
     return render(request,"books/book-detail.html",{
        "book": data
     })
+
+
+class A:
+    pass
+
+obj = A()

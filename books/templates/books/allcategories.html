@@ -9,6 +9,17 @@ Bookstore || all-categories
     <div class="d-flex justify-content-center">
         <div class="col-md-6">
             <h1 class="my-4 text-muted text-center">All Categories</h1>
+            <div class="d-flex justify-content-end">
+                <a href="{% url 'post-category'%}" class="btn btn-warning">Add Category</a>
+            </div>
+            {% for msg in messages %}
+                {% if msg.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success" role="alert">
+                    {{msg}}
+                </div>
+                {% endif %}
+            {% endfor %}
+            
 
             <!-- table to show the content of book  -->
             
@@ -25,7 +36,7 @@ Bookstore || all-categories
                         <td >{{category.category_name}}</td>
                         <td>
                             <a href="#" class="btn btn-primary">Edit</a>&nbsp;&nbsp;
-                            <a href="#" class="btn btn-danger">Delete</a>
+                            <a href="{% url 'delete-category' category.id%}" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
                     {% endfor %}

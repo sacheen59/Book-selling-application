@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Bookstore || update-book
+{% endblock %}
+
+{% block main_content %}
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <div class="col-md-6 shadow-lg p-3 mt-4">
+            <h1 class="text-center text-muted">Update Book Form</h1>
+            {% for msg in messages %}
+                {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger" role="alert">
+                    {{msg}}
+                </div>
+                {% endif %}
+            {% endfor %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form | crispy}}
+                <input type="submit" value="Update Book" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

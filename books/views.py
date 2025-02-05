@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib import messages
 from .data import list_of_books
 from . models import Book,Category
-from .forms import CategoryForm
+from .forms import CategoryForm,BookForm
 
 
 
@@ -54,15 +54,11 @@ def homepage(request):
 
 # ]
 
-def get_all_books(request):
-    all_books = Book.objects.all()
-    return render(request,"books/allbooks.html",{
-        'books': all_books
-    })
+
 
 def get_all_categories(request):
     all_categories = Category.objects.all()
-    return render(request,"books/allcategories.html",{
+    return render(request,"books/category/allcategories.html",{
         'categories': all_categories
     })
 
@@ -84,10 +80,10 @@ def post_category(request):
             # Add an error message to the messages framework
             messages.add_message(request,messages.ERROR,"Failed to add category")
             # Render the postcategory.html template and pass in the form object
-            return render(request,"books/postcategory.html",{'form': form})
+            return render(request,"books/category/postcategory.html",{'form': form})
     
     # Render the postcategory.html template and pass in the CategoryForm class
-    return render(request,"books/postcategory.html",{
+    return render(request,"books/category/postcategory.html",{
         'form': CategoryForm
     })
 
@@ -124,13 +120,73 @@ def update_category(request,category_id):
             # Add an error message
             messages.add_message(request,messages.ERROR,"Failed to update category")
             # Render the postcategory.html template with the form
-            return render(request,"books/updatecategory.html",{'form': form})
-    return render(request,"books/updatecategory.html",{
+            return render(request,"books/category/updatecategory.html",{'form': form})
+    return render(request,"books/category/updatecategory.html",{
 
         'form': CategoryForm(instance=category)
     }
 )
 
+# get all books 
+def get_all_books(request):
+    all_books = Book.objects.all()
+    return render(request,"books/book/allbooks.html",{
+        'books': all_books
+    })
 # post book
+def post_book(request):
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request,messages.SUCCESS,'Book Added Successfully')
+            return redirect('/books/') #http://localhost:8000/books
+        else:
+            messages.add_message(request,messages.ERROR,'Failed to Add book')
+            return render(request,'books/book/postbook.html',{'form': form})
+        
+    return render(request,"books/book/postbook.html",{
+        'form': BookForm
+    }
+    )
+
 # delete book
+def delete_book(request,book_id):
+    book = Book.objects.get(pk=book_id)
+    book.delete()
+    messages.add_message(request,messages.SUCCESS,'Book Deleted Successfully')
+    return redirect('/books/')
+
 # update book
+# Define a function to update a book
+def update_book(request,book_id):
+    # Get the book object from the database using the book_id
+    book = Book.objects.get(pk=book_id)
+    # Check if the request method is POST
+    if request.method == 'POST':
+        # Create a form instance with the POST data and the book object
+        form = BookForm(request.POST,instance=book)
+        # Check if the form is valid
+        if form.is_valid():
+            # Save the form
+            form.save()
+            # Add a success message
+            messages.add_message(request,messages.SUCCESS,'Book Updated Successfully')
+            # Redirect to the books page
+            return redirect('/books/')
+        else:
+            # Add an error message
+            messages.add_message(request,messages.ERROR,'Failed to Update book')
+            # Render the updatebook.html template with the form
+            return render(request,'books/book/updatebook.html',{'form': form})
+    # Render the updatebook.html template with the book form
+    return render(request,'books/book/updatebook.html',{
+        'form': BookForm(instance=book)
+    })
+
+# relationship in django
+# one to many 
+# many to one
+# many to many
+# one to one
+

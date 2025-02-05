@@ -7,6 +7,9 @@ Bookstore || all-books
 {% block main_content %}
 <div class="container-fluid">
     <h1 class="my-4 text-muted text-center">All Books</h1>
+    <div class="d-flex justify-content-end">
+      <a href="#" class="btn btn-warning">Add Book</a>
+    </div>
 
     <!-- table to show the content of book  -->
     <table class="table table-striped table-hover table-bordered">
@@ -19,6 +22,7 @@ Bookstore || all-books
             <th scope="col">Price</th>
             <th scope="col">Instock</th>
             <th scope="col">Published date</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -33,6 +37,10 @@ Bookstore || all-books
                 <td >{{book.price}}</td>
                 <td >{% if book.instock %} In stock {% else %} Out of Stock {% endif %}</td>
                 <td >{{book.published_date}}</td>
+                <td>
+                  <a href="#" class="btn btn-primary">Edit</a>&nbsp;&nbsp;
+                  <a href="#" class="btn btn-danger">Delete</a>
+              </td>
             </tr>
             {% endfor %}
         </tbody>

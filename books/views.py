@@ -66,45 +66,71 @@ def get_all_categories(request):
         'categories': all_categories
     })
 
+# Define a function called post_category that takes in a request as a parameter
 def post_category(request):
+    # Check if the request method is POST
     if request.method == "POST":
+        # Create a form object using the CategoryForm class and the POST data from the request
         form = CategoryForm(request.POST)
+        # Check if the form is valid
         if form.is_valid():
+            # Save the form data to the database
             form.save()
+            # Add a success message to the messages framework
             messages.add_message(request,messages.SUCCESS,"Category added successfully")
+            # Redirect the user to the categories page
             return redirect("/books/categories/")
         else:
+            # Add an error message to the messages framework
             messages.add_message(request,messages.ERROR,"Failed to add category")
+            # Render the postcategory.html template and pass in the form object
             return render(request,"books/postcategory.html",{'form': form})
     
+    # Render the postcategory.html template and pass in the CategoryForm class
     return render(request,"books/postcategory.html",{
         'form': CategoryForm
     })
 
+# Define a function to delete a category
 def delete_category(request,category_id):
+    # Get the category object from the database using the category_id
     category = Category.objects.get(id=category_id)
+    # Delete the category object
     category.delete()
+    # Add a success message to the request
     messages.add_message(request,messages.SUCCESS,"Category deleted successfully")
+    # Redirect the user to the categories page
     return redirect("/books/categories/")
 
 
-def get_book_by_id(request,book_id):
-    data = {
+# updage category 
+# Define a function to update a category
+def update_category(request,category_id):
+    # Get the category object from the database using the category_id
+    category = Category.objects.get(id=category_id)
+    # Check if the request method is POST
+    if request.method == "POST":
+        # Create a form instance using the POST data and the category object
+        form = CategoryForm(request.POST,instance=category)
+        # Check if the form is valid
+        if form.is_valid():
+            # Save the form
+            form.save()
+            # Add a success message
+            messages.add_message(request,messages.SUCCESS,"Category updated successfully")
+            # Redirect to the categories page
+            return redirect("/books/categories/")
+        else:
+            # Add an error message
+            messages.add_message(request,messages.ERROR,"Failed to update category")
+            # Render the postcategory.html template with the form
+            return render(request,"books/updatecategory.html",{'form': form})
+    return render(request,"books/updatecategory.html",{
 
+        'form': CategoryForm(instance=category)
     }
-    for book in list_of_books:
-        if book["id"] == int(book_id):
-            data["id"] = int(book_id)
-            data["name"] =  book["name"]
+)
 
-    print(data)
-            
-    return render(request,"books/book-detail.html",{
-       "book": data
-    })
-
-
-class A:
-    pass
-
-obj = A()
+# post book
+# delete book
+# update book

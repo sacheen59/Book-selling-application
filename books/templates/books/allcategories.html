@@ -35,7 +35,7 @@ Bookstore || all-categories
                     <tr>
                         <td >{{category.category_name}}</td>
                         <td>
-                            <a href="#" class="btn btn-primary">Edit</a>&nbsp;&nbsp;
+                            <a href="{% url 'update-category' category.id%}" class="btn btn-primary">Edit</a>&nbsp;&nbsp;
                             <a href="{% url 'delete-category' category.id%}" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>

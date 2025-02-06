@@ -7,6 +7,13 @@ Bookstore || all-books
 {% block main_content %}
 <div class="container-fluid">
     <h1 class="my-4 text-muted text-center">All Books</h1>
+    {% for msg in messages %}
+        {% if msg.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-danger" role="alert">
+                {{msg}}
+            </div>
+        {% endif %}
+    {% endfor %}
     <div class="d-flex justify-content-end">
       <a href="{% url 'post-book' %}" class="btn btn-warning">Add Book</a>
     </div>

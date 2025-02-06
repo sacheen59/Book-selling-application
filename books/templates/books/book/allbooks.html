@@ -17,6 +17,7 @@ Bookstore || all-books
           <tr>
             <th scope="col">Name</th>
             <th scope="col">Image Url</th>
+            <th scope="col">Category</th>
             <th scope="col">Description</th>
             <th scope="col">Author</th>
             <th scope="col">Price</th>
@@ -32,6 +33,7 @@ Bookstore || all-books
                 <td >
                     <img src="{{ book.imageUrl}}" alt="{{book.name}}" height="100px" width="100px">
                 </td>
+                <td>{{book.category.category_name}}</td>
                 <td >{{book.description}}</td>
                 <td >{{book.author}}</td>
                 <td >{{book.price}}</td>

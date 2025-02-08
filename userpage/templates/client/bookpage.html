@@ -5,5 +5,23 @@ Bookstore || Books
 {% endblock %}
 
 {% block content %}
-<h1>This is Book page</h1>
+<div class="container my-4">
+    <h1 class="text-muted text-center">All Books</h1>
+
+    <!-- bookstart  -->
+    <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for book in books%}
+        <div class="col">
+          <div class="card p-2">
+            <img src="{{book.imageUrl}}" class="card-img-top" alt="..." height="200px">
+            <div class="card-body">
+              <h3 class="card-title">{{book.name}}</h3>
+              <h5>Price: RS {{book.price}}</h5>
+            </div>
+            <a href="{% url 'book-details' book.id %}" class="btn btn-warning">View Details</a>
+          </div>
+        </div>
+        {% endfor %}
+    <!-- bookend  -->
+ </div>
 {% endblock %}

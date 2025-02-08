@@ -1,0 +1,27 @@
+{% extends 'client/layout.html'%}
+
+{% block title %}
+Bookstore || {{book.name}}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card mb-3 " style="max-width: 540px;">
+        <div class="row g-0 p-3">
+          <div class="col-md-4">
+            <img src="{{book.imageUrl}}" class="img-fluid rounded-start" alt="{{book.name}}">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h3 class="card-title">{{book.name}}</h3>
+              <h5 class="card-title">Author: {{book.author}}</h5>
+              <h5 class="text-muted">Price: Rs {{book.price}}</h5>
+              <p class="card-text">{{book.description}}</p>
+              <p class="card-text"><small class="text-body-secondary">Published Date: {{book.published_date}}</small></p>
+              <a href="#" class="btn btn-warning">Add to Cart</a>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+{% endblock %}

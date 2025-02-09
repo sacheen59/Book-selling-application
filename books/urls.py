@@ -14,4 +14,8 @@ urlpatterns = [
     path('addbook/',views.post_book,name="post-book"),
     path('deletebook/<int:book_id>/',views.delete_book,name="delete-book"),
     path('updatebook/<int:book_id>/',views.update_book,name="update-book"),
+
+    # dasboard path 
+    path('dashboard/',views.admin_dashboard,name="admin-dashboard")
+
 ]

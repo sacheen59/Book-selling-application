@@ -184,9 +184,8 @@ def update_book(request,book_id):
         'form': BookForm(instance=book)
     })
 
-# relationship in django
-# one to many 
-# many to one
-# many to many
-# one to one
 
+
+# admin dashboard 
+def admin_dashboard(request):
+    return render(request,"books/dashboard/dashboard.html")

@@ -8,6 +8,15 @@ Bookstore || Books
 <div class="container my-4">
     <h1 class="text-muted text-center">All Books</h1>
 
+    <!-- to show the messages -->
+    {% for msg in messages %}
+    {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+    <div class="alert alert-danger" role="alert">
+        {{msg}}
+    </div>
+    {% endif %}
+{% endfor %}
+
     <!-- bookstart  -->
     <div class="row row-cols-1 row-cols-md-4 g-4">
         {% for book in books%}

@@ -21,8 +21,11 @@ Bookstore || Register-user
             <form method="post">
                 {% csrf_token %}
                 {{ form | crispy}}
+                <div class="d-grid gap-2 my-2">
                 <input type="submit" value="Register" class="btn btn-primary">
+            </div>
             </form>
+            <p class="text-center mt-2">Already have an account? <span><a href="{% url 'login' %}">Login</a></span></p>
         </div>
     </div>
 </div>

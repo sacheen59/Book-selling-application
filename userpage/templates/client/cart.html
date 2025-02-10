@@ -1,0 +1,57 @@
+{% extends 'client/layout.html'%}
+
+{% block title %}
+Bookstore || My Cart
+{% endblock %}
+
+
+{% block content %}
+<!-- cart item start -->
+<div class="container">
+    <h1 class="my-4 text-muted text-center">MY CART</h1>
+    {% for msg in messages %}
+        {% if msg.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+            <div class="alert alert-success" role="alert">
+                {{msg}}
+            </div>
+        {% endif %}
+    {% endfor %}
+
+    {% if carts|length == 0 %}
+        <div class="container">
+            <h3 class="text-center text-muted">Your cart is empty</h3>
+        </div>
+    {% else %}
+
+    <!-- table to show the content of book  -->
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Image Url</th>
+            <th scope="col">Author</th>
+            <th scope="col">Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for cart in carts %}
+            <tr>
+                <td >{{cart.book.name}}</td>
+                <td >
+                    <img src="{{ cart.book.imageUrl}}" alt="{{book.name}}" height="100px" width="100px">
+                </td>
+                <td >{{cart.book.author}}</td>
+                <td >{{cart.book.price}}</td>
+                <td>
+                  <a href="#" class="btn btn-success">Order Now</a>&nbsp;&nbsp;
+                  <a href="{% url 'delete-from-cart' cart.id%}" class="btn btn-danger">Delete</a>
+              </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+</div>
+<!-- cart item end  -->
+{% endblock %}

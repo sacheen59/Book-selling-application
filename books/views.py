@@ -4,6 +4,8 @@ from django.contrib import messages
 from .data import list_of_books
 from . models import Book,Category
 from .forms import CategoryForm,BookForm
+from django.contrib.auth.decorators import login_required
+from accounts.auth import admin_only
 
 
 
@@ -55,13 +57,16 @@ def homepage(request):
 # ]
 
 
-
+@login_required
+@admin_only
 def get_all_categories(request):
     all_categories = Category.objects.all()
     return render(request,"books/category/allcategories.html",{
         'categories': all_categories
     })
 
+@login_required
+@admin_only
 # Define a function called post_category that takes in a request as a parameter
 def post_category(request):
     # Check if the request method is POST
@@ -87,6 +92,8 @@ def post_category(request):
         'form': CategoryForm
     })
 
+@login_required
+@admin_only
 # Define a function to delete a category
 def delete_category(request,category_id):
     # Get the category object from the database using the category_id
@@ -99,6 +106,8 @@ def delete_category(request,category_id):
     return redirect("/books/categories/")
 
 
+@login_required
+@admin_only
 # updage category 
 # Define a function to update a category
 def update_category(request,category_id):
@@ -127,12 +136,17 @@ def update_category(request,category_id):
     }
 )
 
+@login_required
+@admin_only
 # get all books 
 def get_all_books(request):
     all_books = Book.objects.all()
     return render(request,"books/book/allbooks.html",{
         'books': all_books
     })
+
+@login_required
+@admin_only
 # post book
 def post_book(request):
     if request.method == 'POST':
@@ -150,6 +164,8 @@ def post_book(request):
     }
     )
 
+@login_required
+@admin_only
 # delete book
 def delete_book(request,book_id):
     book = Book.objects.get(pk=book_id)
@@ -157,6 +173,8 @@ def delete_book(request,book_id):
     messages.add_message(request,messages.SUCCESS,'Book Deleted Successfully')
     return redirect('/books/')
 
+@login_required
+@admin_only
 # update book
 # Define a function to update a book
 def update_book(request,book_id):
@@ -186,6 +204,8 @@ def update_book(request,book_id):
 
 
 
+@login_required
+@admin_only
 # admin dashboard 
 def admin_dashboard(request):
     return render(request,"books/dashboard/dashboard.html")

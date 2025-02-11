@@ -1,0 +1,29 @@
+{% extends "client/layout.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title %}
+Bookstore || Order form
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <div class="col-md-6 shadow-lg p-3 mt-4">
+            <h1 class="text-center text-muted">Order Form</h1>
+            {% for msg in messages %}
+                {% if msg.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger" role="alert">
+                    {{msg}}
+                </div>
+                {% endif %}
+            {% endfor %}
+            <form method="post">
+                {% csrf_token %}
+                {{ form | crispy}}
+                <input type="submit" value="Order now" class="btn btn-primary my-2">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

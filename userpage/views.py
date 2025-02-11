@@ -2,9 +2,11 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from books.models import Book
 from django.contrib.auth.decorators import login_required
-from .models import Cart
+from .models import Cart,Order
 from django.contrib import messages
 from accounts.auth import user_only
+from .forms import OrderFrom
+from django.contrib import messages
 # Create your views here.
 
 
@@ -68,9 +70,56 @@ def delete_from_cart(request, cart_id):
     messages.add_message(request,messages.SUCCESS,'Book removed from cart successfully')
     return redirect('/cart')
 
-# order
-# checout
-# myorder 
-# marks as deliver(deliver , status deliver)
-# payment method 
-# logout features
+@login_required
+@user_only
+def user_order(request,cart_id,book_id):
+    user = request.user
+    book = Book.objects.get(id = book_id)
+    cart = Cart.objects.get(id = cart_id)
+    if request.method == 'POST':
+        form = OrderFrom(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            quantity = data['quantity']
+            price = book.price
+            total_price = int(quantity) * int(price)
+            payment_method = data['payment_method']
+            contact_no = data['contact_no']
+            address = data['address']
+
+            order = Order.objects.create(
+                book = book,
+                user = user,
+                quantity = quantity,
+                total_price = total_price,
+                payment_method = payment_method,
+                contact_no = contact_no,
+                address = address
+            )
+
+            if order.payment_method == 'Cash on Delivery':
+                cart.delete()
+                messages.add_message(request,messages.SUCCESS,'Order placed successfully')
+                return redirect('/myorders')
+        else:
+            messages.add_message(request,messages.ERROR,'Order Failed')
+            return render(request,'client/orderform.html',{'form':form})
+    return render(request,'client/orderform.html',{'form':OrderFrom})
+
+
+@login_required
+@user_only
+def show_myorder(request):
+    user = request.user
+    orders = Order.objects.filter(user = user)
+    return render(request,'client/myorder.html',{'orders':orders})
+
+
+@login_required
+@user_only
+def mark_as_deliver(request,order_id):
+    order = Order.objects.get(id = order_id)
+    order.status = 'Delivered...'
+    order.save()
+    messages.add_message(request,messages.SUCCESS,'Order marked as delivered')
+    return redirect('/myorders')

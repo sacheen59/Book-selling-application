@@ -33,7 +33,7 @@ def login_user(request):
             user = authenticate(username=data['username'],password=data['password'])
             if user is not None:
                 login(request,user)
-                return redirect("/books/")
+                return redirect("/admin/dashboard")
             else:
                 messages.add_message(request,messages.ERROR,"Invalid username or password")
     return render(request, 'accounts/login.html',{'form':LoginForm})

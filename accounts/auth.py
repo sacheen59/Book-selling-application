@@ -1,15 +1,6 @@
 from django.shortcuts import redirect
 
 
-# to check whether the user is logged in or not 
-
-def unauthenticated_user(view_func):
-    def wrapper_func(request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect('/')
-        else:
-            return view_func(request, *args, **kwargs)
-    return wrapper_func
 
 # give access to admin page if request comes from admin
 # if request is from normal user redirect to user page

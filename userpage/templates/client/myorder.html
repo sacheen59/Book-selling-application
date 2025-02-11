@@ -1,7 +1,7 @@
 {% extends 'client/layout.html'%}
 
 {% block title %}
-Bookstore || My Cart
+Bookstore || My Orders
 {% endblock %}
 
 
@@ -17,9 +17,9 @@ Bookstore || My Cart
         {% endif %}
     {% endfor %}
 
-    {% if carts|length == 0 %}
+    {% if orders|length == 0 %}
         <div class="container">
-            <h3 class="text-center text-muted">Your cart is empty</h3>
+            <h3 class="text-center text-muted">Your Orders is empty</h3>
         </div>
     {% else %}
 
@@ -30,22 +30,27 @@ Bookstore || My Cart
             <th scope="col">Name</th>
             <th scope="col">Image Url</th>
             <th scope="col">Author</th>
-            <th scope="col">Price</th>
+            <th scope="col">Total Price</th>
+            <th>Payment Method</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-            {% for cart in carts %}
+            {% for order in orders %}
             <tr>
-                <td >{{cart.book.name}}</td>
+                <td >{{order.book.name}}</td>
                 <td >
-                    <img src="{{ cart.book.imageUrl}}" alt="{{book.name}}" height="100px" width="100px">
+                    <img src="{{ order.book.imageUrl}}" alt="{{book.name}}" height="100px" width="100px">
                 </td>
-                <td >{{cart.book.author}}</td>
-                <td >{{cart.book.price}}</td>
+                <td >{{order.book.author}}</td>
+                <td >{{order.total_price}}</td>
+                <td>{{order.payment_method}}</td>
                 <td>
-                  <a href="{% url 'user-order' cart.id cart.book.id %}" class="btn btn-success">Order Now</a>&nbsp;&nbsp;
-                  <a href="{% url 'delete-from-cart' cart.id%}" class="btn btn-danger">Delete</a>
+                    {% if order.status == 'Pending...' %}
+                  <a href="{% url 'mark-as-deliver' order.id %}" class="btn btn-success">Mark as Deliver</a>
+                  {% else %}
+                  <div class="badge text-bg-success">{{order.status}}</div>
+                  {% endif %}
               </td>
             </tr>
             {% endfor %}

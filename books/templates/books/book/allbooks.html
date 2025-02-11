@@ -14,9 +14,9 @@ Bookstore || all-books
             </div>
         {% endif %}
     {% endfor %}
-    <div class="d-flex justify-content-end">
+    <!-- <div class="d-flex justify-content-end">
       <a href="{% url 'post-book' %}" class="btn btn-warning">Add Book</a>
-    </div>
+    </div> -->
 
     <!-- table to show the content of book  -->
     <table class="table table-striped table-hover table-bordered">
@@ -41,7 +41,7 @@ Bookstore || all-books
                     <img src="{{ book.imageUrl}}" alt="{{book.name}}" height="100px" width="100px">
                 </td>
                 <td>{{book.category.category_name}}</td>
-                <td >{{book.description}}</td>
+                <td >{{book.description|truncatewords:3}}</td>
                 <td >{{book.author}}</td>
                 <td >{{book.price}}</td>
                 <td >{% if book.instock %} In stock {% else %} Out of Stock {% endif %}</td>

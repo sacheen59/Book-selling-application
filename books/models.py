@@ -14,7 +14,7 @@ class Book(models.Model):
     author = models.CharField(max_length=200)
     price = models.DecimalField(max_digits=5, decimal_places=2)
     instock = models.BooleanField(default=True)
-    imageUrl = models.CharField(max_length=300)
+    image = models.ImageField(upload_to='books',null=True,blank=True)
     description = models.TextField()
     published_date = models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)

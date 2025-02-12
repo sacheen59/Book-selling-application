@@ -6,6 +6,8 @@ from . models import Book,Category
 from .forms import CategoryForm,BookForm
 from django.contrib.auth.decorators import login_required
 from accounts.auth import admin_only
+from userpage.models import Order
+from django.contrib.auth.models import User
 
 
 
@@ -80,7 +82,7 @@ def post_category(request):
             # Add a success message to the messages framework
             messages.add_message(request,messages.SUCCESS,"Category added successfully")
             # Redirect the user to the categories page
-            return redirect("/books/categories/")
+            return redirect("/admin/categories/")
         else:
             # Add an error message to the messages framework
             messages.add_message(request,messages.ERROR,"Failed to add category")
@@ -103,7 +105,7 @@ def delete_category(request,category_id):
     # Add a success message to the request
     messages.add_message(request,messages.SUCCESS,"Category deleted successfully")
     # Redirect the user to the categories page
-    return redirect("/books/categories/")
+    return redirect("/admin/categories/")
 
 
 @login_required
@@ -124,7 +126,7 @@ def update_category(request,category_id):
             # Add a success message
             messages.add_message(request,messages.SUCCESS,"Category updated successfully")
             # Redirect to the categories page
-            return redirect("/books/categories/")
+            return redirect("/admin/categories/")
         else:
             # Add an error message
             messages.add_message(request,messages.ERROR,"Failed to update category")
@@ -154,7 +156,7 @@ def post_book(request):
         if form.is_valid():
             form.save()
             messages.add_message(request,messages.SUCCESS,'Book Added Successfully')
-            return redirect('/books/') #http://localhost:8000/books
+            return redirect('/admin/allbooks') #http://localhost:8000/books
         else:
             messages.add_message(request,messages.ERROR,'Failed to Add book')
             return render(request,'books/book/postbook.html',{'form': form})
@@ -171,7 +173,7 @@ def delete_book(request,book_id):
     book = Book.objects.get(pk=book_id)
     book.delete()
     messages.add_message(request,messages.SUCCESS,'Book Deleted Successfully')
-    return redirect('/books/')
+    return redirect('/admin/allbooks')
 
 @login_required
 @admin_only
@@ -191,7 +193,7 @@ def update_book(request,book_id):
             # Add a success message
             messages.add_message(request,messages.SUCCESS,'Book Updated Successfully')
             # Redirect to the books page
-            return redirect('/books/')
+            return redirect('/admin/allbooks')
         else:
             # Add an error message
             messages.add_message(request,messages.ERROR,'Failed to Update book')
@@ -208,4 +210,34 @@ def update_book(request,book_id):
 @admin_only
 # admin dashboard 
 def admin_dashboard(request):
-    return render(request,"books/dashboard/dashboard.html")
+    orders = Order.objects.filter(status = 'Delivered...')
+    users = User.objects.all()
+    books = Book.objects.filter(instock = True)
+    pending_books = Order.objects.filter(status = 'Pending...')
+    categories = Category.objects.all()
+    return render(request,"books/dashboard/dashboard.html",{
+        'total_delivered': len(orders),
+        'total_users': len(users),
+        'total_books': len(books),
+        'pending_books': len(pending_books),
+        'total_categories': len(categories),
+    })
+
+
+@login_required
+@admin_only
+def all_orders(request):
+    orders = Order.objects.all()
+    context = {
+        'orders': orders
+    }
+    return render(request,"books/dashboard/orders.html",context)
+
+@login_required
+@admin_only
+def customers(request):
+    customers = User.objects.all()
+    context = {
+        'users': customers
+    }
+    return render(request,"books/dashboard/customers.html",context)

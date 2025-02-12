@@ -21,7 +21,7 @@ Bookstore || dashboard
                     <span> Total Orders </span>
                   </div>
                   <div class="text-secondary fw-bold mb-0 text-center">
-                    <span>Delivered: 0</span>
+                    <span>Delivered: {{total_delivered}}</span>
                   </div>
                   <div class="col-auto text-center">
                     <i
@@ -47,7 +47,7 @@ Bookstore || dashboard
                     <span> Total Users </span>
                   </div>
                   <div class="text-secondary fw-bold mb-0 text-center">
-                    <span>Deactivated: 0</span>
+                    <span>Active: {{total_users}}</span>
                   </div>
                   <div class="col-auto text-center">
                     <i class="fas fa-users fs-1 text-success"></i>
@@ -68,10 +68,10 @@ Bookstore || dashboard
                   <div
                     class="text-uppercase text-light fw-bold text-xs mb-1 text-center"
                   >
-                    <span> Total Products </span>
+                    <span> Total Books </span>
                   </div>
                   <div class="text-warning fw-bold mb-0 text-center">
-                    <span>Out of Stock: 0</span>
+                    <span>In Stock: {{total_books}}</span>
                   </div>
                   <div class="col-auto text-center">
                     <i class="fas fa-globe fs-1 text-light"></i>
@@ -95,7 +95,7 @@ Bookstore || dashboard
                     <span> Total Sales </span>
                   </div>
                   <div class="text-white fw-bold mb-0 text-center">
-                    <span>Booking: 0</span>
+                    <span>Booking: {{pending_books}}</span>
                   </div>
                   <div class="col-auto text-center">
                     <i class="fas fa-globe fs-1 text-white"></i>
@@ -143,7 +143,7 @@ Bookstore || dashboard
                     <span> Categories </span>
                   </div>
                   <div class="text-white fw-bold mb-0 text-center">
-                    <span>Sub-Categories: 0</span>
+                    <span>Sub-Categories: {{total_categories}}</span>
                   </div>
                   <div class="col-auto text-center">
                     <i class="fas fa-globe fs-1 text-white"></i>

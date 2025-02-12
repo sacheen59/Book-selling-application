@@ -1,0 +1,49 @@
+{% extends 'base.html'%}
+
+{% block title %}
+Bookstore || All Orders
+{% endblock %}
+
+
+{% block main_content %}
+<!-- cart item start -->
+<div class="container">
+    <h1 class="my-4 text-muted text-center">All Orders</h1>
+
+    {% if orders|length == 0 %}
+        <div class="container">
+            <h3 class="text-center text-muted">No Orders Yet</h3>
+        </div>
+    {% else %}
+
+    <!-- table to show the content of book  -->
+    <table class="table table-striped table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th scope="col">Name</th>
+            <th scope="col">Image Url</th>
+            <th scope="col">Total Price</th>
+            <th>Payment Method</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{order.user.username}}</td>
+                <td >{{order.book.name}}</td>
+                <td >
+                    <img src="{{ order.book.imageUrl}}" alt="{{book.name}}" height="100px" width="100px">
+                </td>
+                <td >{{order.total_price}}</td>
+                <td>{{order.payment_method}}</td>
+                <td>{{order.status}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+</div>
+<!-- cart item end  -->
+{% endblock %}

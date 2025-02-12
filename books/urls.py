@@ -16,6 +16,8 @@ urlpatterns = [
     path('updatebook/<int:book_id>/',views.update_book,name="update-book"),
 
     # dasboard path 
-    path('dashboard/',views.admin_dashboard,name="admin-dashboard")
+    path('dashboard/',views.admin_dashboard,name="admin-dashboard"),
+    path('allorders/',views.all_orders,name="all-orders"),
+    path('customers/',views.customers,name="customers"),
 
 ]
